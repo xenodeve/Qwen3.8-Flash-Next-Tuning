@@ -11,3 +11,7 @@ not) must cite the per-stage counters of the same paired runs — `verify window
 `dispatch detail`, `secondary timing`, `mtp`, `tier hits`, parsed with Strata's `tests/xeno/latency_breakdown.py`
 — compared stage by stage A vs B. If a stage is not instrumented, add a timer. Estimates stitched from
 different runs or a profiler trace are hypotheses and must say so. Full rule: `AGENTS.md` in Strata-xeno.
+
+**Measure at high CPU priority, every time.** Other programs take CPU from Strata's pinned pool workers and cause
+random slow runs. Every A/B, ABBA or sweep passes `--pool-priority 2` in every arm (Strata-xeno `AGENTS.md`), records
+it in the report, and runs no builds or other CPU-heavy work while a measurement is in flight.
